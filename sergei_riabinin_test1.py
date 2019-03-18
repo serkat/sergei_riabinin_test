@@ -7,7 +7,7 @@ def satisfied_input(start, end):
     """
     if start.isdigit() and end.isdigit():
         if end < start:
-            return print('\nEnd point must be greater than {}'.format(start))
+            print('\nEnd point must be greater than {}'.format(start))
         else:
             return True
     else:
