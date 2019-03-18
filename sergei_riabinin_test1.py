@@ -1,22 +1,7 @@
-def satisfied_input(start, end):
-    """
-        check if end point is greater or equal than start point
-    :param start: start point of segment
-    :param end: end point of segment
-    :return: True or print error
-    """
-    if start.isdigit() and end.isdigit():
-        if end < start:
-            print('\nEnd point must be greater than {}'.format(start))
-        else:
-            return True
-    else:
-        print('\nMust be integers and not empty')
-
-
-def segments_overlap():
-    """
-        Task:
+#!/usr/bin/python
+# coding: UTF-8
+"""
+    Task:
         Write a program that accepts two lines (x1,x2) and (x3,x4) on the x-axis
         and returns whether they overlap. As an example, (1,5) and (2,6) overlaps but not (1,5) and (6,8).
 
@@ -62,23 +47,68 @@ def segments_overlap():
             , ((4, 4), (4, 4))
             , ((0, 0), (0, 0))
             , ((5, 7), (2, 9))
+            , ((2, 9), (5, 7))
+            , ((5, 7), (7, 7))
+            , ((7, 7), (5, 7))
+            , ((5,5),(5,7))
+            , ((5,7),(5,5))
+
 
         ]
-    :return: true or false
+
+"""
+
+import sys
+import argparse
+
+
+def createParser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('str', nargs='+')
+
+    return parser
+
+
+def satisfied_input(start, end):
     """
-    # enter start and end points of first segment
-    start_point_of_a = input("Enter start point of A segment: ")
-    end_point_of_a = input("Enter end point of A segment: ")
+        check if end point is greater or equal than start point
+    :param start: start point of segment
+    :param end: end point of segment
+    :return: True or print error
+    """
+    if start.isdigit() and end.isdigit():
+        if end < start:
+            print('\nEnd point must be greater than {}'.format(start))
+        else:
+            return True
+    else:
+        print('\nMust be integers and not empty')
 
-    if satisfied_input(start_point_of_a, end_point_of_a):
 
-        # enter start and end points of second segment
-        start_point_of_b = input("Enter start point of B segment: ")
-        end_point_of_b = input("Enter end point of B segment: ")
+if __name__ == '__main__':
+    parser = createParser()
+    namespace = parser.parse_args(sys.argv[1:])
 
-        if satisfied_input(start_point_of_b, end_point_of_b):
-            # segments overlaps if (A2 >= B1) and (B2 >= A1)
-            result = end_point_of_a >= start_point_of_b and end_point_of_b >= start_point_of_a
-            print('\n{} and {} are overlapping - {}'.format((start_point_of_a, end_point_of_a), (start_point_of_b, end_point_of_b), result))
+    result = False
 
-segments_overlap()
+    if namespace.str is not None and (len(namespace.str) == 4):
+
+        # enter start and end points of first segment
+        start_point_of_a = namespace.str[0]
+        end_point_of_a = namespace.str[1]
+
+        if satisfied_input(start_point_of_a, end_point_of_a):
+
+            # enter start and end points of second segment
+            start_point_of_b = namespace.str[2]
+            end_point_of_b = namespace.str[3]
+
+            if satisfied_input(start_point_of_b, end_point_of_b):
+                # segments overlaps if (A2 >= B1) and (B2 >= A1)
+                result = end_point_of_a >= start_point_of_b and end_point_of_b >= start_point_of_a
+                print('\n{} and {} are overlapping - {}'.format((start_point_of_a, end_point_of_a),
+                                                                (start_point_of_b, end_point_of_b), result))
+    else:
+        result = 'You need enter all values X1 X2 Y1 Y2'
+
+    print(result)
