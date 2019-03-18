@@ -48,7 +48,7 @@ class OrmucoCache:
                 old_item = key
             elif self.cache[key]['access_date'] < self.cache[old_item]['access_date']:
                 old_item = key
-        self.cache.pop(old_item)
+        del self.cache(old_item)
 
     @property
     def cache_size(self):
